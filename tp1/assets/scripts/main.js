@@ -4,8 +4,9 @@
   // Sélection de l'élément SVG
   var svg = d3.select("svg");
 
-  /* TODO : trouver la fonction dans D3 permettant de trouver tous les cercles se trouvant dans l'élément
-            SVG puis stocker le résultat dans la variable "circles".
+  /* TODO : trouver la fonction dans D3 permettant de trouver tous les cercles
+            se trouvant dans l'élément SVG puis stocker le résultat dans la
+            variable "circles".
   */
   var circles = svg.selectAll("svg circle");
 
@@ -63,11 +64,17 @@ update()
    * Suppression de tous les cercles présents dans l'élément SVG.
    */
   function deleteCircles() {
-	/* TODO :
-	   1) Afficher une boîte de confirmation afin de confirmer si l'utilisateur souhaite supprimer tous les cercles.
+	  /* TODO :
+      1) Afficher une boîte de confirmation afin de confirmer si l'utilisateur souhaite supprimer tous les cercles.
+    */
+    if (confirm(`Do you want to delete all circles?`)) {
+      console.log('delete');
+    /*
 	   2) Supprimer tous les cercles si l'utilisateur souhaite les supprimer, sinon ne rien faire.
     */
-
+      svg.html("");
+      update();
+    }
   }
 
   /**
@@ -112,8 +119,14 @@ update()
   function textTip(radius, position, color) {
     /* TODO : mettre en forme les informations pertinentes du cercle pointé
        Vous pouvez utiliser la balise <br> pour faire revenir le texte à la ligne
-     */
-
+    */
+    // console.log(me);
+    return `
+      <p>radius:   ${radius   || ''}</p><br>
+      <p>position: x=${position[0] || ''},
+                   y=${position[1] || ''} </p><br>
+      <p>color:    ${color    || ''}</p>
+    `
   }
 
   var tip = d3.tip()
@@ -126,10 +139,10 @@ update()
          2) La position du cercle
          3) La couleur du cercle
        */
-
-      var radius ;
-      var position ;
-      var color ;
+      var radius   = d3.select(this).attr("r");
+      var position = [d3.select(this).attr("cx"),
+                      d3.select(this).attr("cy")];
+      var color    = d3.select(this).attr("fill");
       return textTip(radius, position, color);
     });
 
