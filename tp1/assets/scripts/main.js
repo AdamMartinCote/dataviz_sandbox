@@ -38,7 +38,7 @@ update()
     /* TODO :
        1) Trouver comment accéder à la valeur du champ spécifiant la quantité de cercles à créer.
     */
-    var numberToAdd = d3.select("#quantity").node().value;
+    let numberToAdd = d3.select("#quantity").node().value;
     /*
        2) Vérifier que cette valeur est correcte.
        3) Si cette valeur est correcte, créer le nombre de cercles demandé avec une boucle for
@@ -48,7 +48,6 @@ update()
     if (numberToAdd < MAX_CIRCLES &&
         numberToAdd >= 1) {
       for (let i = 0; i < numberToAdd; i++) {
-        console.log(i);
         svg.append(generateRandomCircle());
       }
     }
@@ -68,7 +67,6 @@ update()
       1) Afficher une boîte de confirmation afin de confirmer si l'utilisateur souhaite supprimer tous les cercles.
     */
     if (confirm(`Do you want to delete all circles?`)) {
-      console.log('delete');
     /*
 	   2) Supprimer tous les cercles si l'utilisateur souhaite les supprimer, sinon ne rien faire.
     */
@@ -120,16 +118,15 @@ update()
     /* TODO : mettre en forme les informations pertinentes du cercle pointé
        Vous pouvez utiliser la balise <br> pour faire revenir le texte à la ligne
     */
-    // console.log(me);
     return `
-      <p>radius:   ${radius   || ''}</p><br>
-      <p>position: x=${position[0] || ''},
-                   y=${position[1] || ''} </p><br>
-      <p>color:    ${color    || ''}</p>
+      <p>Rayon du cercle:   ${parseInt(radius,10)   || ''}  </p><br>
+      <p>Centre du cercle: (${parseInt(position[0]) || ''},
+                            ${parseInt(position[1]) || ''}) </p><br>
+      <p>Couleur du cercle: ${color                 || ''}      </p>
     `
   }
 
-  var tip = d3.tip()
+  let tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function () {
@@ -139,10 +136,10 @@ update()
          2) La position du cercle
          3) La couleur du cercle
        */
-      var radius   = d3.select(this).attr("r");
-      var position = [d3.select(this).attr("cx"),
+      let radius   = d3.select(this).attr("r");
+      let position = [d3.select(this).attr("cx"),
                       d3.select(this).attr("cy")];
-      var color    = d3.select(this).attr("fill");
+      let color    = d3.select(this).attr("fill");
       return textTip(radius, position, color);
     });
 
