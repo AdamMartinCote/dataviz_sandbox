@@ -21,14 +21,13 @@
    */
   function update() {
     /* TODO
-       1) Mettre à jour la variable circles
-       2) Mettre à jour le texte indiquant le nombre de cercles présents dans l'élément SVG
+       1) Mettre à jour la variable circles*/
+    circles = svg.selectAll("svg circle");
+
+    /* 2) Mettre à jour le texte indiquant le nombre de cercles présents dans l'élément SVG
      */
-
-     // 2)
-     var circlesCount = circles._groups[0].length; // FIXME
-     d3.select("#circles-count").text(circlesCount);
-
+    var circlesCount = circles.nodes().length;
+    d3.select("#circles-count").text(circlesCount);
   }
 update()
   /**
@@ -37,11 +36,26 @@ update()
   function createCircles() {
     /* TODO :
        1) Trouver comment accéder à la valeur du champ spécifiant la quantité de cercles à créer.
+    */
+    var numberToAdd = d3.select("#quantity").node().value;
+    /*
        2) Vérifier que cette valeur est correcte.
        3) Si cette valeur est correcte, créer le nombre de cercles demandé avec une boucle for
           (utiliser la fonction generateRandomCircle()).
-       4) Si cette valeur n'est pas correcte, créer une alerte informant l'utilisateur.
     */
+    const MAX_CIRCLES = 100;
+    if (numberToAdd < MAX_CIRCLES &&
+        numberToAdd >= 1) {
+      for (let i = 0; i < numberToAdd; i++) {
+        console.log(i);
+        svg.append(generateRandomCircle());
+      }
+    }
+    /* 4) Si cette valeur n'est pas correcte, créer une alerte informant l'utilisateur.
+    */
+    else {
+      alert(`Invalid value, accepted values: [1, ${MAX_CIRCLES}]`);
+    }
 
   }
 
