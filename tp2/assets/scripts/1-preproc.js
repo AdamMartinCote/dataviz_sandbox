@@ -14,8 +14,8 @@
 function domainColor(color, data) {
   // TODO: Définir le domaine de la variable "color" en associant un nom de rue à une couleur.
 
-	var streets = data.columns.splice(0, 1).splice(data.columns.length-1, 1);
-	console.log(streets);
+	var streets = data.columns.slice().splice(1, data.columns.length - 2);
+	color.domain(streets);
 }
 
 /**
@@ -26,7 +26,15 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convertir les dates du fichier CSV en objet de type Date.
-
+	data = data.map(function(item) {
+		// item.Date = new Date(item.Date);
+		let dateParts = item.Date.split("/");
+		let day = dateParts[0];
+		let month = dateParts[1];
+		let year = dateParts[2];
+		item.Date = new Date("20" + year, month - 1, day);
+		return item;
+	});
 }
 
 /**
@@ -52,11 +60,20 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Retourner l'objet ayant le format demandé.
-	values = d3.csv("data/2016.csv");
-	console.log(values);
-	console.log('foo');
-
-
+	let sources = [];
+	const streets = data.columns.slice().splice(1, data.columns.length - 2);
+	streets.forEach(function(street) {
+		sources.push({
+			name: street,
+			values: data.map(function(d) {
+				return {
+					date: d.Date,
+					count: parseInt(d[street])
+				};
+			})
+		});
+	});
+	return sources;
 }
 
 /**
@@ -68,7 +85,11 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
-
+	const dates = data.map(function(d) {
+		return d.Date;
+	});
+	xFocus.domain(d3.min(dates), d3.max(dates));
+	xContext.domain(d3.min(dates), d3.max(dates));
 }
 
 /**
@@ -80,7 +101,17 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
-
+	const max = d3.max(sources.map(function(street) {
+		return d3.max(street.values.map(function(v) {
+			return v.count;
+		}));
+	}));
+	// FIXME: set to zero ??
+	const min = d3.min(sources.map(function(street) {
+		return d3.min(street.values.map(function(v) {
+			return v.count;
+		}));
+	}));
+	yFocus.domain(min, max);
+	yContext.domain(min, max);
 }
-
-console.log("loadé");
