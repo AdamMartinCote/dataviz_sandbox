@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 /**
  * Fichier permettant de traiter les données provenant du fichier CSV.
@@ -14,6 +14,8 @@
 function domainColor(color, data) {
   // TODO: Définir le domaine de la variable "color" en associant un nom de rue à une couleur.
 
+	var streets = data.columns.splice(0, 1).splice(data.columns.length-1, 1);
+	console.log(streets);
 }
 
 /**
@@ -82,4 +84,3 @@ function domainY(yFocus, yContext, sources) {
 }
 
 console.log("loadé");
-setTimeout(function(){ alert("Hello"); }, 3000);
