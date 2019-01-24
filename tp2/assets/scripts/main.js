@@ -76,7 +76,6 @@
 
   /***** Chargement des données *****/
   d3.csv("./data/2016.csv").then(function(data) {
-		// console.log(data)
     /***** Prétraitement des données *****/
     // Échelle permettant d'associer 10 valeurs à 10 couleurs différentes
     var color = d3.scaleOrdinal(d3.schemeCategory10);

@@ -111,5 +111,4 @@ function domainY(yFocus, yContext, sources) {
 	}));
 	yFocus  .domain([min, max]);
 	yContext.domain([min, max]);
-	console.log(yFocus.domain());
 }

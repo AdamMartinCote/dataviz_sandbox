@@ -46,7 +46,6 @@ function createFocusLineChart(g, sources, line, color) {
 		.enter()
 		.append("path")
 		.attr("d", (d,i) => {
-			// console.log(d.values);
 			return line(d.values);
 		})
 		.attr("stroke", (d,i) => {
