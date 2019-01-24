@@ -14,6 +14,7 @@
 function domainColor(color, data) {
   // TODO: Définir le domaine de la variable "color" en associant un nom de rue à une couleur.
 
+	// FIXME: use data bind ?
 	var streets = data.columns.slice().splice(1, data.columns.length - 2);
 	color.domain(streets);
 }
@@ -24,17 +25,11 @@ function domainColor(color, data) {
  * @param data    Données provenant du fichier CSV.
  * @see https://www.w3schools.com/jsref/jsref_obj_date.asp
  */
-function parseDate(data) {
-  // TODO: Convertir les dates du fichier CSV en objet de type Date.
-	data = data.map(function(item) {
-		// item.Date = new Date(item.Date);
-		let dateParts = item.Date.split("/");
-		let day = dateParts[0];
-		let month = dateParts[1];
-		let year = dateParts[2];
-		item.Date = new Date("20" + year, month - 1, day);
-		return item;
-	});
+function parseDate(data) { // FIXME: use d3
+	for (let item of data) {
+		let parser = d3.timeParse("%d/%m/%y");
+		item.Date = parser(item.Date);
+	}
 }
 
 /**
@@ -88,8 +83,8 @@ function domainX(xFocus, xContext, data) {
 	const dates = data.map(function(d) {
 		return d.Date;
 	});
-	xFocus.domain(d3.min(dates), d3.max(dates));
-	xContext.domain(d3.min(dates), d3.max(dates));
+	xFocus  .domain([d3.min(dates), d3.max(dates)]);
+	xContext.domain([d3.min(dates), d3.max(dates)]);
 }
 
 /**
@@ -112,6 +107,7 @@ function domainY(yFocus, yContext, sources) {
 			return v.count;
 		}));
 	}));
-	yFocus.domain(min, max);
-	yContext.domain(min, max);
+	yFocus  .domain([min, max]);
+	yContext.domain([min, max]);
+	console.log(yFocus.domain());
 }
