@@ -1,4 +1,4 @@
-// "use strict";
+"use strict";
 
 /**
  * Fichier permettant de traiter les données provenant du fichier CSV.
@@ -16,7 +16,9 @@ function domainColor(color, data) {
 
 	// FIXME: use data bind ?
 	var streets = data.columns.slice().splice(1, data.columns.length - 2);
-	color.domain(streets);
+	// color.domain(streets);
+	color.domain([d3.min(data), d3.max(data)]);
+
 }
 
 /**
@@ -25,7 +27,7 @@ function domainColor(color, data) {
  * @param data    Données provenant du fichier CSV.
  * @see https://www.w3schools.com/jsref/jsref_obj_date.asp
  */
-function parseDate(data) { // FIXME: use d3
+function parseDate(data) {
 	for (let item of data) {
 		let parser = d3.timeParse("%d/%m/%y");
 		item.Date = parser(item.Date);

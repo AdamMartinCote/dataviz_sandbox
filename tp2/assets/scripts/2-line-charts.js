@@ -16,17 +16,15 @@
  * @see https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89      (voir line generator)
  */
 function createLine(x, y) {
-  // TODO: Retourner une ligne SVG (voir "d3.line"). Pour l'option curve, utiliser un curveBasisOpen.
-	console.log("data:");
 	var l = d3
 			.line()
 			.x((d, i) => {
-				return x(i * 30);
+				return x(d.date);
 			})
 			.y((d) => {
 				return y(d.count);
 			})
-	// .curve(d3.curveBasisOpen);
+			.curve(d3.curveBasisOpen);
 	return l;
 }
 
@@ -47,13 +45,15 @@ function createFocusLineChart(g, sources, line, color) {
 		.data(sources)
 		.enter()
 		.append("path")
-
 		.attr("d", (d,i) => {
 			// console.log(d.values);
 			return line(d.values);
 		})
-		.attr("stroke", "blue")
-		.attr("stroke-width", 2)
+		.attr("stroke", (d,i) => {
+			return color(i);
+		})
+		.attr("stroke-width", 1)
+		.attr("fill", "none")
 		.attr("clip-path", "url(#clip)") // to be able to modify it later
 	;
 }
