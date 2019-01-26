@@ -67,5 +67,18 @@ function createFocusLineChart(g, sources, line, color) {
  */
 function createContextLineChart(g, sources, line, color) {
   // TODO: Dessiner le graphique contexte dans le groupe "g".
-
+	g
+		.selectAll("path")
+		.data(sources)
+		.enter()
+		.append("path")
+		.attr("d", (d,i) => {
+			return line(d.values);
+		})
+		.attr("stroke", (d,i) => {
+			return color(i);
+		})
+		.attr("stroke-width", 1)
+		.attr("fill", "none")
+	;
 }
