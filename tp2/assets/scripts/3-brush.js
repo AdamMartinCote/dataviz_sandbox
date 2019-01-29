@@ -20,6 +20,11 @@
  * @see https://bl.ocks.org/mbostock/34f08d5e11952a80609169b7917d4172    ==> (en d3 v5) <==
  */
 function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
-  // TODO: Redessiner le graphique focus en fonction de la zone sélectionnée dans le graphique contexte.
+  var s = d3.event.selection || xContext.range();
 
+  xFocus.domain(s.map(xContext.invert, xContext));
+
+  g.selectAll(".line").attr("d", d => line(d.values));
+  g.select(".axis.x").call(xAxis);
+  g.select(".axis.y").call(yAxis);
 }

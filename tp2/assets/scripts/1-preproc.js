@@ -56,7 +56,6 @@ function parseDate(data) {
  *                  ]
  */
 function createSources(color, data) {
-  // TODO: Retourner l'objet ayant le format demandé.
 	let sources = [];
 	const streets = data.columns.slice().splice(1, data.columns.length - 2);
 	streets.forEach(function(street) {
@@ -81,7 +80,7 @@ function createSources(color, data) {
  * @param data        Données provenant du fichier CSV.
  */
 function domainX(xFocus, xContext, data) {
-  // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
+	// TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
 	const dates = data.map(function(d) {
 		return d.Date;
 	});
@@ -97,18 +96,12 @@ function domainX(xFocus, xContext, data) {
  * @param sources     Données triées par nom de rue et par date (voir fonction "createSources").
  */
 function domainY(yFocus, yContext, sources) {
-  // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
+	// TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
 	const max = d3.max(sources.map(function(street) {
 		return d3.max(street.values.map(function(v) {
 			return v.count;
 		}));
 	}));
-	// FIXME: set to zero ??
-	const min = d3.min(sources.map(function(street) {
-		return d3.min(street.values.map(function(v) {
-			return v.count;
-		}));
-	}));
-	yFocus  .domain([min, max]);
-	yContext.domain([min, max]);
+	yFocus  .domain([0, max]);
+	yContext.domain([0, max]);
 }

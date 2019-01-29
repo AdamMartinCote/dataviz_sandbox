@@ -16,16 +16,7 @@
  * @see https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89      (voir line generator)
  */
 function createLine(x, y) {
-	var l = d3
-			.line()
-			.x((d, i) => {
-				return x(d.date);
-			})
-			.y((d) => {
-				return y(d.count);
-			})
-			.curve(d3.curveBasisOpen);
-	return l;
+	return d3.line().x((d, i) => x(d.date)).y((d) => y(d.count)).curve(d3.curveBasisOpen);
 }
 
 /**
@@ -45,6 +36,7 @@ function createFocusLineChart(g, sources, line, color) {
 		.data(sources)
 		.enter()
 		.append("path")
+		.attr('id', (d, i) => `line_${i}`)
 		.attr("d", (d,i) => {
 			return line(d.values);
 		})
@@ -53,8 +45,8 @@ function createFocusLineChart(g, sources, line, color) {
 		})
 		.attr("stroke-width", 1)
 		.attr("fill", "none")
-		.attr("clip-path", "url(#clip)") // to be able to modify it later
-	;
+		.attr("class", "line")
+		.attr("clip-path", "url(#clip)"); // to be able to modify it later
 }
 
 /**
@@ -79,6 +71,5 @@ function createContextLineChart(g, sources, line, color) {
 			return color(i);
 		})
 		.attr("stroke-width", 1)
-		.attr("fill", "none")
-	;
+		.attr("fill", "none");
 }
