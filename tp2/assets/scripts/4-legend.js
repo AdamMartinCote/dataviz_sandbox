@@ -14,7 +14,6 @@
  * @param color     Échelle de 10 couleurs.
  */
 function legend(svg, sources, color) {
-	// TODO: Créer la légende accompagnant le graphique.
 
 	let legend = svg
 		.select("g")
@@ -49,7 +48,7 @@ function legend(svg, sources, color) {
 		})
 		.style("fill", d => color(d.name))
 		.style("cursor", "pointer")
-		.attr("stroke", "#c1c1c1")
+		.attr("stroke", "black")
 		.on("click", (d, i, nodes) => {
 			displayLine(nodes[i], color(d.name));
 		});

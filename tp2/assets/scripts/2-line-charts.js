@@ -28,9 +28,6 @@ function createLine(x, y) {
  * @param color     L'échelle de couleurs ayant une couleur associée à un nom de rue.
  */
 function createFocusLineChart(g, sources, line, color) {
-  // TODO: Dessiner le graphique focus dans le groupe "g".  Pour
-  // chacun des "path" que vous allez dessiner, spécifier l'attribut
-  // suivant: .attr("clip-path", "url(#clip)").
 	g
 		.selectAll("path")
 		.data(sources)
@@ -58,7 +55,6 @@ function createFocusLineChart(g, sources, line, color) {
  * @param color     L'échelle de couleurs ayant une couleur associée à un nom de rue.
  */
 function createContextLineChart(g, sources, line, color) {
-  // TODO: Dessiner le graphique contexte dans le groupe "g".
 	g
 		.selectAll("path")
 		.data(sources)

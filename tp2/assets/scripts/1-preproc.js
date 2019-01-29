@@ -12,13 +12,8 @@
  * @param data    Données provenant du fichier CSV.
  */
 function domainColor(color, data) {
-  // TODO: Définir le domaine de la variable "color" en associant un nom de rue à une couleur.
-
-	// FIXME: use data bind ?
 	var streets = data.columns.slice().splice(1, data.columns.length - 2);
-	// color.domain(streets);
 	color.domain([d3.min(data), d3.max(data)]);
-
 }
 
 /**
@@ -80,7 +75,6 @@ function createSources(color, data) {
  * @param data        Données provenant du fichier CSV.
  */
 function domainX(xFocus, xContext, data) {
-	// TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
 	const dates = data.map(function(d) {
 		return d.Date;
 	});
@@ -96,7 +90,6 @@ function domainX(xFocus, xContext, data) {
  * @param sources     Données triées par nom de rue et par date (voir fonction "createSources").
  */
 function domainY(yFocus, yContext, sources) {
-	// TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
 	const max = d3.max(sources.map(function(street) {
 		return d3.max(street.values.map(function(v) {
 			return v.count;
