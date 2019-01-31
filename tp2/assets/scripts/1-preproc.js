@@ -12,7 +12,6 @@
  * @param data    Données provenant du fichier CSV.
  */
 function domainColor(color, data) {
-	var streets = data.columns.slice().splice(1, data.columns.length - 2);
 	color.domain([d3.min(data), d3.max(data)]);
 }
 
