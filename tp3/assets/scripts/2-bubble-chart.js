@@ -16,9 +16,11 @@
  * @param width   La largeur du graphique.
  */
 function createAxes(g, xAxis, yAxis, height, width) {
-  // TODO: Dessiner les axes X et Y du graphique.
-  // Axe horizontal
-
+	g.append("g")
+		.attr("transform", `translate(0,${height})`)
+		.call(xAxis);
+	g.append("g")
+		.call(yAxis);
 }
 
 /**
