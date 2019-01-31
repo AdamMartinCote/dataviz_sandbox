@@ -8,7 +8,8 @@
 /**
  * Crée les axes du graphique à bulles.
  *
- * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
+ * @param g       Le groupe SVG dans lequel le graphique à bulles doit être
+ *                dessiné.
  * @param xAxis   L'axe X.
  * @param yAxis   L'axe Y.
  * @param height  La hauteur du graphique.
@@ -23,7 +24,8 @@ function createAxes(g, xAxis, yAxis, height, width) {
 /**
  * Crée le graphique à bulles.
  *
- * @param g       Le groupe SVG dans lequel le graphique à bulles doit être dessiné.
+ * @param g       Le groupe SVG dans lequel le graphique à bulles doit être
+ *                dessiné.
  * @param data    Les données à utiliser.
  * @param x       L'échelle pour l'axe X.
  * @param y       L'échelle pour l'axe Y.

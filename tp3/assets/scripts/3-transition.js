@@ -6,7 +6,8 @@
 
 
 /**
- * Réalise une transition entre les données actuellement utilisées et les nouvelles qui doivent être utilisées.
+ * Réalise une transition entre les données actuellement utilisées et
+ * les nouvelles qui doivent être utilisées.
  *
  * @param g       Le groupe SVG dans lequel le graphique à bulles est dessiné.
  * @param data    Les nouvelles données à utiliser.
@@ -16,7 +17,8 @@
  */
 function transition(g, data, x, y, r) {
   /* TODO:
-       - Réaliser une transition entre l'ancienne position et la nouvelle position des cercles.
+       - Réaliser une transition entre l'ancienne position et la nouvelle
+			   position des cercles.
        - Mettre à jour la taille du rayon des cercles.
        - La transition doit se faire en 1 seconde.
    */
