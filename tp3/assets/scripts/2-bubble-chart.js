@@ -21,6 +21,27 @@ function createAxes(g, xAxis, yAxis, height, width) {
 		.call(xAxis);
 	g.append("g")
 		.call(yAxis);
+
+	const titleOffset = 6;
+	const yAxisTitle = "Revenu (USD)";
+	g.append("text").text((d) => {
+		return yAxisTitle;
+	})
+		.attr("text-anchor", "end")
+		.attr("dominant-baseline", "hanging")
+		.attr("transform",
+					`translate (${titleOffset}, 0) \
+				   rotate    (-90)`)
+	;
+	const xAxisTitle = "Espérance de vie (années)";
+	g.append("text").text((d) => {
+		return xAxisTitle;
+	})
+		.attr("text-anchor", "end")
+		.attr("transform",
+					`translate(${width}, \
+                     ${height - titleOffset})`)
+	;
 }
 
 /**
