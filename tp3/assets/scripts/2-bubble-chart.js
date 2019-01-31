@@ -38,5 +38,21 @@ function createAxes(g, xAxis, yAxis, height, width) {
 function createBubbleChart(g, data, x, y, r, color, tip) {
   // TODO: Dessiner les cercles du graphique en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'un cercle est survolé.
-
+	g.selectAll("circle")
+		.data(data)
+		.enter()
+		.append("circle")
+		.attr("r", (d) => {
+			return r(d.population);
+		})
+		.attr("cx", (d) => {
+			return x(d.lifeExpectancy);
+		})
+		.attr("cy", (d) => {
+			return y(d.income);
+		})
+		.attr("fill", (d,i) => {
+			return color(i);
+		})
+	;
 }
