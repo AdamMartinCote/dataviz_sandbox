@@ -20,7 +20,14 @@ function search(countrySelected, g) {
        - Appliquez une opacité de 15% aux cercles associés aux autres
          pays.
    */
-
+	g.selectAll("circle")
+		.attr("opacity", "0.15")
+		.filter((d,i) => {
+			return ( d.name === countrySelected );
+		})
+		.attr("opacity","1.00")
+		.attr("fill", "black")
+	;
 }
 
 /**
