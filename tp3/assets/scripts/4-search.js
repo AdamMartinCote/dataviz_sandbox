@@ -25,7 +25,7 @@ function search(countrySelected, g) {
 		.filter((d,i) => {
 			return ( d.name === countrySelected );
 		})
-		.attr("opacity","1.00")
+		.attr("opacity", "1.00")
 		.classed("selected", true);
 	;
 }
