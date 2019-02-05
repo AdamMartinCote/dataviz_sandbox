@@ -26,7 +26,7 @@ function search(countrySelected, g) {
 			return ( d.name === countrySelected );
 		})
 		.attr("opacity","1.00")
-		.attr("fill", "black")
+		.classed("selected", true);
 	;
 }
 
@@ -39,5 +39,8 @@ function search(countrySelected, g) {
 function reset(g) {
   // TODO: Réinitialiser l'affichage du nuage de points à celle par
   //       défaut.
-
+	g.selectAll("circle")
+		.attr("opacity", "1.00")
+		.classed("selected", false)
+	;
 }
