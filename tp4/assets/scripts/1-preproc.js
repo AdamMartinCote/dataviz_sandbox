@@ -30,7 +30,7 @@ function domainX(x, data) {
 	const names = data.map((d) => {
 		return d.name
 	});
-	x.domain([d3.min(names), d3.max(names)]);
+	x.domain(names);
 }
 
 /**

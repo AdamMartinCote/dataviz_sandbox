@@ -17,7 +17,18 @@
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Dessiner les axes X et Y du graphique. Assurez-vous
   // d'indiquer un titre pour l'axe Y.  Axe horizontal
+	g
+		.append("g")
+		.attr("transform", `translate(0, ${height})`)
+		.call(xAxis)
+		.selectAll("text")
+		.style("text-anchor", "start")
+		.attr("transform", "rotate(30) translate(5,2)")
+	;
 
+	g
+		.append("g")
+		.call(yAxis);
 }
 
 /**
