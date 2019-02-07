@@ -83,5 +83,14 @@ function getMatrix(data) {
 function getTotal(data) {
   // TODO:	Calculer le nombre total de trajets réalisés pour le mois
   // 				d'août 2015.
-  return 0;
+
+	const allCounts = data.map((stations) => {
+		return stations.destinations.map((dest, i) => {
+			return dest.count;
+		});
+	}).flat();
+	const total = allCounts.reduce((acc,val) => {
+		return acc + val;
+	});
+  return total;
 }
