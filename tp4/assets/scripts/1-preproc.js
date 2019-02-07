@@ -27,7 +27,7 @@ function domainColor(color, data) {
 function domainX(x, data) {
   // TODO: Préciser le domaine pour la variable "x" en y associant les
   // stations de BIXI utilisées.
-	let names = data.map((d) => {
+	const names = data.map((d) => {
 		return d.name
 	});
 	x.domain([d3.min(names), d3.max(names)]);
@@ -42,15 +42,7 @@ function domainX(x, data) {
 function domainY(y, currentData) {
   // TODO: Préciser le domaine pour la variable "y" en prenant comme
   // minimum et maximum le nombre de trajets vers une station de BIXI.
-
-	// Get all counts from data flat FIXME: remove
-	// let allCounts = currentData.map((stations) => {
-	// 	return stations.destinations.map((dest, i) => {
-	// 		return dest.count;
-	// 	});
-	// }).flat();
-	// console.log(currentData.destinations);
-	let counts = currentData.destinations.map((d) => {
+	const counts = currentData.destinations.map((d) => {
 		return d.count;
 	});
 	y.domain([d3.min(counts), d3.max(counts)]);
@@ -67,7 +59,7 @@ function domainY(y, currentData) {
 function getMatrix(data) {
   // TODO: Calculer la matrice d'adjacence pour créer le diagramme à
   // cordes.
-	let matrix = data.map((src) => {
+	const matrix = data.map((src) => {
 		return src.destinations.map((dest) => {
 			return dest.count;
 		});
