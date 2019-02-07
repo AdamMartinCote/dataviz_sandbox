@@ -67,7 +67,12 @@ function domainY(y, currentData) {
 function getMatrix(data) {
   // TODO: Calculer la matrice d'adjacence pour créer le diagramme à
   // cordes.
-  return [];
+	let matrix = data.map((src) => {
+		return src.destinations.map((dest) => {
+			return dest.count;
+		});
+	})
+  return matrix;
 }
 
 /**
