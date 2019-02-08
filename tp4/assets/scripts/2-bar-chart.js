@@ -90,7 +90,19 @@ function transition(g, newData, y, yAxis, height) {
 		- Réaliser une transition pour mettre à jour l'axe des Y et
    		la hauteur des barres à partir des nouvelles données.
 		- La transition doit se faire en 1 seconde.
-   */
+  */
+	g
+		.selectAll("rect")
+		.data(newData.destinations)
+		.transition()
+		.duration(1000)
+		.attr("height", (d) => {
+			return y(d.count);
+		})
+		.attr("y", (d) => {
+			return height - y(d.count);
+		})
+	;
 }
 
 /**
