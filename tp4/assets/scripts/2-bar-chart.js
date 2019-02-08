@@ -72,6 +72,8 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
 		.attr("fill", (d, i) => {
 			return color(i);
 		})
+		.on("mouseover", tip.show)
+		.on("mouseout" , tip.hide)
 	;
 }
 
@@ -118,5 +120,12 @@ function getToolTipText(d, currentData, formatPercent) {
   //       format demandé.  Assurez-vous d'utiliser la fonction
   //       "formatPercent" pour formater le pourcentage correctement.
 
-  return "";
+	const num = d.count;
+	const totalCount = currentData.destinations
+																.map( d => d.count )
+																.reduce( (a,b) => a + b);
+	const percent = formatPercent(num/totalCount);
+  return `
+		${num} (${percent})
+	`;
 }
