@@ -48,44 +48,31 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles
   //       spécifiées.  Assurez-vous d'afficher l'infobulle spécifiée
   //       lorsqu'une barre est survolée.
-	console.log(currentData.destinations);
-	const barWidth = currentData.destinations.length / 500
+
+	const axisLength = 880;
+	const padding    = 10;
+	const barWidth   = axisLength / currentData.destinations.length - padding;
 	g
 		.selectAll("rect")
 		.data(currentData.destinations)
 		.enter()
 		.append("rect")
-		.attr("width", 50)
+		.attr("transform-origin", "top right")
+		.attr("width", barWidth)
 		.attr("height", (d) => {
-			console.log(d.count);
+
 			return y(d.count);
 		})
-		.attr("x", (d,i) => {
-			console.log(i);
-			return 80 * i;
+		.attr("x", (d, i) => {
+			return i * (barWidth + padding) + 0.5*padding;
 		})
 		.attr("y", (d) => {
 			return height - y(d.count);
 		})
-		.attr("fill", (d,i) => {
+		.attr("fill", (d, i) => {
 			return color(i);
 		})
 	;
-	// g
-	// 	.selectAll("rect")
-	// 	.data(currentData)
-	// 	.enter()
-	// 	.append("rect")
-	// 	.attr("fill", "black")
-	// 	.attr("x", (d, i) => {
-	// 		return i * 5;
-	// 	})
-	// 	.attr("y", (d, i) => {
-	// 		return i * 5;
-	// 	})
-	// 	.attr("width", 5)
-	// 	.attr("height",5)
-	// ;
 }
 
 /**

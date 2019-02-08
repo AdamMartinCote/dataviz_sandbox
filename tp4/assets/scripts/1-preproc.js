@@ -45,6 +45,7 @@ function domainY(y, currentData) {
 	const counts = currentData.destinations.map((d) => {
 		return d.count;
 	});
+	console.log(counts);
 	y.domain([0, d3.max(counts)]);
 }
 
