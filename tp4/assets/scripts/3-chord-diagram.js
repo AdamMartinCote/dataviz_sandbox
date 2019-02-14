@@ -34,6 +34,35 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
        souris.
   */
 
+	let groups = g
+			.selectAll("g")
+			.data(layout.groups)
+			.enter()
+			.append("g")
+	;
+
+	let arcs = groups
+			.append("path")
+			.attr("d", arc)
+			.attr("id", (d,i) => { return `arc${i}` })
+			.attr("fill", (d,i) => { return color(i) })
+	;
+	let labels = groups
+			.append("text")
+			.attr("dy", 5)
+			// .style("text-anchor", "middle")
+			.attr("startOffset", '50%')
+			.append("textPath")
+
+			.attr("dominant-baseline", "hanging")
+			.style("font-size", "13px")
+			.attr('fill', 'white')
+			.attr("xlink:href", (d,i) => { return `#arc${i}` })
+			.text((d,i) => {
+				return data[i].name;
+			})
+	;
+
 }
 
 /**
