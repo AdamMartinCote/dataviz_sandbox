@@ -44,9 +44,10 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
 	let arcs = groups
 			.append("path")
 			.attr("d", arc)
-			.attr("id", (d,i) => { return `arc${i}` })
-			.attr("fill", (d,i) => { return color(i) })
+			.attr("id",   (d,i) => { return `arc${i}` })
+			.attr("fill", (d,i) => { return color(i)  })
 	;
+
 	let labels = groups
 			.append("text")
 			.attr("dx", 5)
@@ -63,13 +64,23 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
 				// ¯\_(ツ)_/¯
 				if ( labelName.startsWith("Pontiac") )
 					return "Pontiac";
-				else if ( labelName.startsWith("Métro Mont-") )
+				else
+				if ( labelName.startsWith("Métro Mont-") )
 					return "Métro Mont-Royal";
 				else
 					return labelName;
 			})
-	;
 
+			.append("title")
+			.text( (d,i) => {
+				let name = data[i].name;
+				let departsCount = data[i].destinations.reduce((acc,val) => {
+					return {count: acc.count + val.count};
+				}, { count: 0 }).count;
+				const percentage = formatPercent( departsCount / total );
+				return `${name}: ${percentage} des départs`;
+			})
+	;
 }
 
 /**
