@@ -49,17 +49,24 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
 	;
 	let labels = groups
 			.append("text")
+			.attr("dx", 5)
 			.attr("dy", 5)
-			// .style("text-anchor", "middle")
-			.attr("startOffset", '50%')
 			.append("textPath")
 
 			.attr("dominant-baseline", "hanging")
-			.style("font-size", "13px")
+			.style("font-size", "12px")
 			.attr('fill', 'white')
 			.attr("xlink:href", (d,i) => { return `#arc${i}` })
 			.text((d,i) => {
-				return data[i].name;
+				let labelName = data[i].name;
+
+				// ¯\_(ツ)_/¯
+				if ( labelName.startsWith("Pontiac") )
+					return "Pontiac";
+				else if ( labelName.startsWith("Métro Mont-") )
+					return "Métro Mont-Royal";
+				else
+					return labelName;
 			})
 	;
 
