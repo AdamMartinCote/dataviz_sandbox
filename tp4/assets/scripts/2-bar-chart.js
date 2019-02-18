@@ -15,20 +15,25 @@
  * @param height  La hauteur du graphique.
  */
 function createAxes(g, xAxis, yAxis, height) {
-  // TODO: Dessiner les axes X et Y du graphique. Assurez-vous
-  // d'indiquer un titre pour l'axe Y.  Axe horizontal
-	g
-		.append("g")
-		.attr("transform", `translate(0, ${height})`)
-		.call(xAxis)
-		.selectAll("text")
-		.style("text-anchor", "start")
-		.attr("transform", "rotate(30) translate(5,2)")
-	;
+  g
+    .append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(xAxis)
+    .selectAll("text")
+    .style("text-anchor", "start")
+    .style("font-size", "9pt")
+    .attr("transform", "rotate(30) translate(5,2)");
 
-	g
-		.append("g")
-		.call(yAxis);
+  g
+    .append("g")
+    .attr('class', 'axis y')
+    .call(yAxis);
+
+  g
+    .append('text')
+    .text('Nombre de trajets')
+    .style("font-size", "10pt")
+    .attr("transform", "translate(-34,-14)")
 }
 
 /**
@@ -45,36 +50,25 @@ function createAxes(g, xAxis, yAxis, height) {
  * @param height        La hauteur du graphique.
  */
 function createBarChart(g, currentData, x, y, color, tip, height) {
-  // TODO: Dessiner les cercles à bandes en utilisant les échelles
-  //       spécifiées.  Assurez-vous d'afficher l'infobulle spécifiée
-  //       lorsqu'une barre est survolée.
 
-	const axisLength = 880;
-	const padding    = 10;
-	const barWidth   = axisLength / currentData.destinations.length - padding;
-	g
-		.selectAll("rect")
-		.data(currentData.destinations)
-		.enter()
-		.append("rect")
-		.attr("transform-origin", "top right")
-		.attr("width", barWidth)
-		.attr("height", (d) => {
-
-			return y(d.count);
-		})
-		.attr("x", (d, i) => {
-			return i * (barWidth + padding) + 0.5*padding;
-		})
-		.attr("y", (d) => {
-			return height - y(d.count);
-		})
-		.attr("fill", (d, i) => {
-			return color(i);
-		})
-		.on("mouseover", tip.show)
-		.on("mouseout" , tip.hide)
-	;
+  const axisLength = 880;
+  const padding    = 10;
+  const barWidth   = axisLength / currentData.destinations.length - padding;
+  g
+    .selectAll("rect")
+    .data(currentData.destinations)
+    .enter()
+    .append("rect")
+    .attr("transform-origin", "top right")
+    .attr("width", barWidth)
+    .attr("height", d => height - y(d.count))
+    .attr("x", (d, i) => {
+        return i * (barWidth + padding) + 0.5 * padding;
+    })
+    .attr("y", d => y(d.count))
+    .attr("fill", d => color(d.name))
+    .on("mouseover", tip.show)
+    .on("mouseout" , tip.hide);
 }
 
 /**
@@ -88,23 +82,22 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
  * @param height    La hauteur du graphique.
  */
 function transition(g, newData, y, yAxis, height) {
-  /* TODO:
-		- Réaliser une transition pour mettre à jour l'axe des Y et
-   		la hauteur des barres à partir des nouvelles données.
-		- La transition doit se faire en 1 seconde.
-  */
-	g
-		.selectAll("rect")
-		.data(newData.destinations)
-		.transition()
-		.duration(1000)
-		.attr("height", (d) => {
-			return y(d.count);
-		})
-		.attr("y", (d) => {
-			return height - y(d.count);
-		})
-	;
+
+  y.domain(d3.extent(newData.destinations, d => d.count));
+
+  g
+    .select(".axis.y")
+    .transition()
+    .duration(1000)
+    .call(yAxis);
+
+  g
+    .selectAll("rect")
+    .data(newData.destinations)
+    .transition()
+    .duration(1000)
+    .attr("height", d => height - y(d.count))
+    .attr("y", d => y(d.count));
 }
 
 /**
@@ -116,16 +109,8 @@ function transition(g, newData, y, yAxis, height) {
  * @return {string}       Le texte à afficher dans l'infobulle.
  */
 function getToolTipText(d, currentData, formatPercent) {
-  // TODO: Retourner le texte à afficher dans l'infobulle selon le
-  //       format demandé.  Assurez-vous d'utiliser la fonction
-  //       "formatPercent" pour formater le pourcentage correctement.
-
-	const num = d.count;
-	const totalCount = currentData.destinations
-																.map( d => d.count )
-																.reduce( (a,b) => a + b);
-	const percent = formatPercent(num/totalCount);
-  return `
-		${num} (${percent})
-	`;
+  const num = d.count;
+  const totalCount = currentData.destinations.map( d => d.count ).reduce( (a,b) => a + b);
+  const percent = formatPercent(num/totalCount);
+  return `${num} (${percent})`;
 }

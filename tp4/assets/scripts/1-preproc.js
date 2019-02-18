@@ -13,9 +13,7 @@
  * @param data    Données provenant du fichier JSON.
  */
 function domainColor(color, data) {
-  // TODO: Préciser le domaine de l'échelle de couleurs en y associant
-  // les stations de BIXI utilisées.
-	color.domain(data);
+	color.domain(data.map(d => d.name));
 }
 
 /**
@@ -25,12 +23,7 @@ function domainColor(color, data) {
  * @param data    Données provenant du fichier JSON.
  */
 function domainX(x, data) {
-  // TODO: Préciser le domaine pour la variable "x" en y associant les
-  // stations de BIXI utilisées.
-	const names = data.map((d) => {
-		return d.name
-	});
-	x.domain(names);
+	x.domain(data.map(d => d.name));
 }
 
 /**
@@ -40,12 +33,7 @@ function domainX(x, data) {
  * @param currentData   Les données qui sont actuellement utilisées par le diagramme.
  */
 function domainY(y, currentData) {
-  // TODO: Préciser le domaine pour la variable "y" en prenant comme
-  // minimum et maximum le nombre de trajets vers une station de BIXI.
-	const counts = currentData.destinations.map((d) => {
-		return d.count;
-	});
-	y.domain([0, d3.max(counts)]);
+	y.domain(d3.extent(currentData.destinations, d => d.count));
 }
 
 /**
@@ -57,14 +45,8 @@ function domainY(y, currentData) {
  * 										trajets partant et se dirigeant vers une station précise.
  */
 function getMatrix(data) {
-  // TODO: Calculer la matrice d'adjacence pour créer le diagramme à
-  // cordes.
-	const matrix = data.map((src) => {
-		return src.destinations.map((dest) => {
-			return dest.count;
-		});
-	})
-  return matrix;
+	return data
+		.map(stations => stations.destinations.map(dest => dest.count));
 }
 
 /**
@@ -73,16 +55,10 @@ function getMatrix(data) {
  * @param data    Données provenant du fichier JSON.
  */
 function getTotal(data) {
-  // TODO:	Calculer le nombre total de trajets réalisés pour le mois
-  // 				d'août 2015.
-
-	const allCounts = data.map((stations) => {
-		return stations.destinations.map((dest, i) => {
-			return dest.count;
+	return data
+		.map(stations => stations.destinations.map(dest => dest.count))
+		.flat()
+		.reduce((acc,val) => {
+			return acc + val;
 		});
-	}).flat();
-	const total = allCounts.reduce((acc,val) => {
-		return acc + val;
-	});
-  return total;
 }

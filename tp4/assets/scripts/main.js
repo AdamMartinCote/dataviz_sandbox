@@ -39,8 +39,7 @@
   /***** Échelles *****/
   var color = d3.scaleOrdinal(d3.schemeCategory10);
   var x = d3.scaleBand().range([0, barChartWidth]).round(0.05);
-  // var y = d3.scaleLinear().range([barChartHeight, 0]);
-  var y = d3.scaleLinear().range([0, barChartHeight]);
+  var y = d3.scaleLinear().range([barChartHeight, 0]);
 
   var xAxis = d3.axisBottom(x);
   var yAxis = d3.axisLeft(y).tickFormat(localization.getFormattedNumber);

@@ -35,52 +35,49 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
   */
 
 	let groups = g
-			.selectAll("g")
-			.data(layout.groups)
-			.enter()
-			.append("g")
-	;
+		.selectAll("g")
+		.data(layout.groups)
+		.enter()
+		.append("g");
 
-	let arcs = groups
-			.append("path")
-			.attr("d", arc)
-			.attr("id",   (d,i) => { return `arc${i}` })
-			.attr("fill", (d,i) => { return color(i)  })
-	;
+	groups
+		.append("path")
+		.attr("d", arc)
+		.attr("id",   (d,i) => { return `arc${i}` })
+		.attr("fill", (d,i) => { return color(i)  });
 
-	let labels = groups
-			.append("text")
-			.attr("dx", 5)
-			.attr("dy", 5)
-			.append("textPath")
+	groups
+		.append("text")
+		.attr("dx", 10)
+		.attr("dy", 7)
+		.append("textPath")
 
-			.attr("dominant-baseline", "hanging")
-			.style("font-size", "12px")
-			.attr('fill', 'white')
-			.attr("xlink:href", (d,i) => { return `#arc${i}` })
-			.text((d,i) => {
-				let labelName = data[i].name;
+		.attr("dominant-baseline", "hanging")
+		.style("font-size", "12px")
+		.attr('fill', 'white')
+		.attr("xlink:href", (d,i) => { return `#arc${i}` })
+		.text((d,i) => {
+			let labelName = data[i].name;
 
-				// ¯\_(ツ)_/¯
-				if ( labelName.startsWith("Pontiac") )
-					return "Pontiac";
-				else
-				if ( labelName.startsWith("Métro Mont-") )
-					return "Métro Mont-Royal";
-				else
-					return labelName;
-			})
+			// ¯\_(ツ)_/¯
+			if ( labelName.startsWith("Pontiac") )
+				return "Pontiac";
+			else
+			if ( labelName.startsWith("Métro Mont-") )
+				return "Métro Mont-Royal";
+			else
+				return labelName;
+		});
 
-			.append("title")
-			.text( (d,i) => {
-				let name = data[i].name;
-				let departsCount = data[i].destinations.reduce((acc,val) => {
-					return {count: acc.count + val.count};
-				}, { count: 0 }).count;
-				const percentage = formatPercent( departsCount / total );
-				return `${name}: ${percentage} des départs`;
-			})
-	;
+	groups.append("title")
+	.text( (d,i) => {
+		let name = data[i].name;
+		let departsCount = data[i].destinations.reduce((acc,val) => {
+			return {count: acc.count + val.count};
+		}, { count: 0 }).count;
+		const percentage = formatPercent( departsCount / total );
+		return `${name}: ${percentage} des départs`;
+	});
 }
 
 /**
@@ -101,12 +98,23 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
  * @see https://beta.observablehq.com/@mbostock/d3-chord-dependency-diagram
  */
 function createChords(g, data, layout, path, color, total, formatPercent) {
-  /* TODO:
-     - Créer les cordes du diagramme avec une opacité de 80%.
-     - Afficher un élément "title" lorsqu'une corde est survolée par
-       la souris.
-  */
+	g.selectAll("path")
+		.data(layout)
+		.enter()
+		.append("path")
+		.attr("d", path)
+		.attr("fill", d => color(data[d.source.index].name))
+		.attr('opacity', 0.8)
+		.append("title")
+		.text((d,i) => {
+			let source = data[d.source.index]
+			let target = data[d.target.index]
 
+			let sourceCount = source.destinations.filter(p => p.name == target.name)[0].count;
+			let targetCount = target.destinations.filter(p => p.name == source.name)[0].count;
+
+			return `${source.name} → ${target.name}: ${formatPercent(sourceCount / total)} \n${target.name} → ${source.name}: ${formatPercent(targetCount / total)}`;
+		});
 }
 
 /**
