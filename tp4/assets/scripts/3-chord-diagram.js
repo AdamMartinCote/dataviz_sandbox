@@ -23,22 +23,13 @@
  * @see https://bl.ocks.org/mbostock/4062006
  */
 function createGroups(g, data, layout, arc, color, total, formatPercent) {
-  /* TODO:
-     - Créer les groupes du diagramme qui sont associés aux stations
-       de BIXI fournies.
-     - Utiliser un "textPath" pour que les nom de stations suivent la
-       forme des groupes.
-     - Tronquer les noms des stations de BIXI qui sont trop longs
-       (Pontiac et Métro Mont-Royal).
-     - Afficher un élément "title" lorsqu'un groupe est survolé par la
-       souris.
-  */
-
+  
 	let groups = g
 		.selectAll("g")
 		.data(layout.groups)
 		.enter()
-		.append("g");
+		.append("g")
+		.attr("class", "arc");
 
 	groups
 		.append("path")
@@ -98,10 +89,12 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
  * @see https://beta.observablehq.com/@mbostock/d3-chord-dependency-diagram
  */
 function createChords(g, data, layout, path, color, total, formatPercent) {
+
 	g.selectAll("path")
 		.data(layout)
 		.enter()
 		.append("path")
+		.attr("class", "chord")
 		.attr("d", path)
 		.attr("fill", d => color(data[d.source.index].name))
 		.attr('opacity', 0.8)
@@ -124,13 +117,14 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
  * @param g     Le groupe SVG dans lequel le diagramme à cordes est dessiné.
  */
 function initializeGroupsHovered(g) {
-  /* TODO:
-     - Lorsqu'un groupe est survolé par la souris, afficher les cordes
-       entrant et sortant de ce groupe avec une
-       opacité de 80%. Toutes les autres cordes doivent être affichées
-       avec une opacité de 10%.
-     - Rétablir l'affichage du diagramme par défaut lorsque la souris
-       sort du cercle du diagramme.
-  */
-
+	g
+		.selectAll('.arc')
+		.on('mouseover', (d, i, nodes) => {
+			g.selectAll('.chord').attr('opacity', (d2,i2) => {
+				return (d2.source.index == d.index || d2.target.index == d.index) ? 0.8 : 0.1;
+			})
+		})
+		.on('mouseout', d => {
+			g.selectAll('.chord').attr('opacity', '0,8')
+		})
 }
