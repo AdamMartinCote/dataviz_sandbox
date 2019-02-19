@@ -23,7 +23,7 @@
  * @see https://bl.ocks.org/mbostock/4062006
  */
 function createGroups(g, data, layout, arc, color, total, formatPercent) {
-  
+
 	let groups = g
 		.selectAll("g")
 		.data(layout.groups)
@@ -90,7 +90,8 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
  */
 function createChords(g, data, layout, path, color, total, formatPercent) {
 
-	g.selectAll("path")
+	g.append("g")
+		.selectAll("path")
 		.data(layout)
 		.enter()
 		.append("path")
