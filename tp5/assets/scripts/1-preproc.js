@@ -61,6 +61,7 @@ function convertNumbers(data) {
 function createSources(data) {
   // TODO: Retourner l'objet ayant le format demandé. Assurez-vous de trier le tableau "results" pour chacune des entrées
   //       en ordre décroissant de votes (le candidat gagnant doit être le premier élément du tableau).
+    console.log(data);
     let arr = [];
     data.forEach( d => {
 	let circonscription = arr.filter( c => c.id === d.id )[0];
@@ -86,7 +87,12 @@ function createSources(data) {
 	    });
 	}
     });
-    // TODO sort results by votes
+    function byVotes(a, b) {
+	return a.votes - b.votes;
+    }
+
+    // Data seems to be fortuitously sorted
+    arr.forEach( element => element.results.sort(byVotes) );
     console.log(arr);
     return arr;
 }
