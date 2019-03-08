@@ -72,8 +72,6 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
          d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
          Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
    */
-
-  console.log(sources);
   var circons = g
       .append("g")
       .selectAll("path")
@@ -82,12 +80,14 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
       .append("path")
       .attr("d", path)
       .attr("fill", d => {
-	return color(d);
+	const id = d.properties.NUMCF;
+	const circons = sources.find( e => e.id === id);
+	const party = circons.results.sort( (a, b) => b.votes - a.votes )[0].party;
+	return color(party);
       })
       .attr("fill-opacity", .8)
       .attr("stroke", "#333")
   ;
-  // console.log(circons);
 }
 
 /**
@@ -105,7 +105,6 @@ function updateMap(svg, g, path, canada) {
   // TODO: Mettre à jour l'élément SVG, la position du groupe "g" et l'affichage des tracés en vous basant sur l'exemple fourni.
 
   let bounds = path.bounds(canada); // ???
-  console.log(bounds);
   let topLeft = bounds[0],
       bottomRight = bounds[1];
   svg
