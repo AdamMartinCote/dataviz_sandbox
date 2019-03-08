@@ -25,10 +25,11 @@ function initTileLayer(L, map) {
    */
     map.setView([57.3, -94.7], 4);
     L.tileLayer(
-	'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-	    minzoom: 1,
-	    maxzoom: 10
-	}).addTo(map);
+        'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://basemaps.cartocdn.com">basemaps</a>',
+            minzoom: 1,
+            maxzoom: 10
+        }).addTo(map);
 }
 
 /**
@@ -41,10 +42,13 @@ function initTileLayer(L, map) {
  */
 function initSvgLayer(map) {
   // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
+
     let svg = d3
-	.select(map.getPanes().overlayPane)
-	.append("svg")
-	.append("g").attr("class", "leaflet-zoom-hide");
+        .select(map.getPanes().overlayPane)
+        .append("svg");
+    svg
+        .append("g")
+        .attr("class", "leaflet-zoom-hide");
 
     return svg;
 }
@@ -68,7 +72,16 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
          d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
          Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
    */
-
+    var circons = g
+        .append("g")
+        .selectAll("path")
+        .data(canada.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("fill", "red")
+    ;
+    // console.log(circons);
 }
 
 /**
