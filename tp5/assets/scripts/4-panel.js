@@ -14,11 +14,11 @@
  */
 function updateDomains(districtSource, x, y) {
   /* TODO: Mettre à jour les domaines selon les spécifications suivantes:
-       - Le domaine X varie entre le minimum et le maximum de votes obtenus pour les candidats de la circonscription;
-       - Le domaine Y correspond au nom des partis politiques associés aux candidats qui se sont présentés. Assurez-vous
-         que les partis sont triés en ordre décroissant de votes obtenus (le parti du candidat gagnant doit se retrouver
-         en premier).
-   */
+     - Le domaine X varie entre le minimum et le maximum de votes obtenus pour les candidats de la circonscription;
+     - Le domaine Y correspond au nom des partis politiques associés aux candidats qui se sont présentés. Assurez-vous
+     que les partis sont triés en ordre décroissant de votes obtenus (le parti du candidat gagnant doit se retrouver
+     en premier).
+  */
 
 }
 
@@ -31,10 +31,10 @@ function updateDomains(districtSource, x, y) {
  */
 function updatePanelInfo(panel, districtSource, formatNumber) {
   /* TODO: Mettre à jour les informations textuelles suivantes:
-       - Le nom de la circonscription ainsi que le numéro;
-       - La nom du candidat gagnant ainsi que son parti;
-       - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
-   */
+     - Le nom de la circonscription ainsi que le numéro;
+     - La nom du candidat gagnant ainsi que son parti;
+     - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
+  */
 
 }
 
@@ -54,14 +54,14 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
  */
 function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, parties) {
   /* TODO: Créer ou mettre à jour le graphique selon les spécifications suivantes:
-       - Le nombre de votes des candidats doit être affiché en ordre décroissant;
-       - Le pourcentage obtenu par chacun des candidat doit être affiché à droite de le barre;
-       - La couleur de la barre doit correspondre à la couleur du parti du candidat. Si le parti du candidat n'est pas
-         dans le domaine de l'échelle de couleurs, la barre doit être coloriée en gris;
-       - Le nom des partis doit être affiché sous la forme abrégée. Il est possible d'obtenir la forme abrégée d'un parti
-         via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
-         vous devez indiquer "Autre" comme forme abrégée.
-   */
+     - Le nombre de votes des candidats doit être affiché en ordre décroissant;
+     - Le pourcentage obtenu par chacun des candidat doit être affiché à droite de le barre;
+     - La couleur de la barre doit correspondre à la couleur du parti du candidat. Si le parti du candidat n'est pas
+     dans le domaine de l'échelle de couleurs, la barre doit être coloriée en gris;
+     - Le nom des partis doit être affiché sous la forme abrégée. Il est possible d'obtenir la forme abrégée d'un parti
+     via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
+     vous devez indiquer "Autre" comme forme abrégée.
+  */
 
 }
 
