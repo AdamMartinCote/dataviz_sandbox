@@ -66,22 +66,28 @@ function initSvgLayer(map) {
 function createDistricts(g, path, canada, sources, color, showPanel) {
   /* TODO: Créer les tracés des circonscriptions. Assurez-vous de respecter les spécifications suivantes:
        - La couleur de la circonscription doit correspondre à la couleur du parti du candidat gagnant;
-       - L'opacité de la couleur (fill-opacity) doit être de 80%;
-       - La couleur des traits doit être "#333";
+       - L'opacité de la couleur (fill-opacity) doit être de 80%; OK
+       - La couleur des traits doit être "#333"; OK
        - Lorsqu'une circonscription est cliquée, celle-ci doit devenir sélectionnée (classe "selected") et le panneau
          d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
          Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
    */
-    var circons = g
-        .append("g")
-        .selectAll("path")
-        .data(canada.features)
-        .enter()
-        .append("path")
-        .attr("d", path)
-        .attr("fill", "red")
-    ;
-    // console.log(circons);
+
+  console.log(sources);
+  var circons = g
+      .append("g")
+      .selectAll("path")
+      .data(canada.features)
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .attr("fill", d => {
+	return color(d);
+      })
+      .attr("fill-opacity", .8)
+      .attr("stroke", "#333")
+  ;
+  // console.log(circons);
 }
 
 /**
