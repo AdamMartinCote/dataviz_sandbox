@@ -88,7 +88,8 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
       .attr("fill-opacity", .8)
       .attr("stroke", "#333")
       .on("click", (d) => {
-	showPanel();
+	const id = d.properties.NUMCF;
+	showPanel(id); // TODO : check
 	regions.classed("selected", false);
 	d3.event.srcElement.classList.add("selected");
       })
@@ -117,7 +118,10 @@ function updateMap(svg, g, path, canada) {
     .attr("height", bottomRight[1] - topLeft[1])
     .style("left", topLeft[0] + "px")
     .style("top",  topLeft[1] + "px");
+    // .select("g")
   g
-    .attr("transform", "translate(" + -topLeft[0] + ","
-	  + -topLeft[1] + ")");
+    .attr("transform",
+	  "translate(" + -topLeft[0] + "," + -topLeft[1] + ")")
+    .selectAll("g path")
+    .attr("d", path);
 }
