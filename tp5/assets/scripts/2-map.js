@@ -15,21 +15,21 @@
  */
 function initTileLayer(L, map) {
   /* TODO: Initialiser le "tileLayer" avec les propriétés suivantes:
-       - URL du fond de carte: https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png;
-       - Zoom maximum: 10;
-       - Zoom minimum: 1.
+     - URL du fond de carte: https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png;
+     - Zoom maximum: 10;
+     - Zoom minimum: 1.
 
      Régler l'affichage initial (view) de la carte aux valeurs suivantes:
-       - Coordonnées: [57.3, -94.7];
-       - Niveau de zoom: 4.
-   */
-    map.setView([57.3, -94.7], 4);
-    L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://basemaps.cartocdn.com">basemaps</a>',
-            minzoom: 1,
-            maxzoom: 10
-        }).addTo(map);
+     - Coordonnées: [57.3, -94.7];
+     - Niveau de zoom: 4.
+  */
+  map.setView([57.3, -94.7], 4);
+  L.tileLayer(
+    'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://basemaps.cartocdn.com">basemaps</a>',
+      minzoom: 1,
+      maxzoom: 10
+    }).addTo(map);
 }
 
 /**
@@ -43,14 +43,14 @@ function initTileLayer(L, map) {
 function initSvgLayer(map) {
   // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
 
-    let svg = d3
-        .select(map.getPanes().overlayPane)
-        .append("svg");
-    svg
-        .append("g")
-        .attr("class", "leaflet-zoom-hide");
+  let svg = d3
+      .select(map.getPanes().overlayPane)
+      .append("svg");
+  svg
+    .append("g")
+    .attr("class", "leaflet-zoom-hide");
 
-    return svg;
+  return svg;
 }
 
 /**
@@ -65,28 +65,33 @@ function initSvgLayer(map) {
  */
 function createDistricts(g, path, canada, sources, color, showPanel) {
   /* TODO: Créer les tracés des circonscriptions. Assurez-vous de respecter les spécifications suivantes:
-       - La couleur de la circonscription doit correspondre à la couleur du parti du candidat gagnant;
-       - L'opacité de la couleur (fill-opacity) doit être de 80%; OK
-       - La couleur des traits doit être "#333"; OK
-       - Lorsqu'une circonscription est cliquée, celle-ci doit devenir sélectionnée (classe "selected") et le panneau
-         d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
-         Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
-   */
-  var circons = g
-      .append("g")
+     - La couleur de la circonscription doit correspondre à la couleur du parti du candidat gagnant; OK
+     - L'opacité de la couleur (fill-opacity) doit être de 80%; OK
+     - La couleur des traits doit être "#333"; OK
+     - Lorsqu'une circonscription est cliquée, celle-ci doit devenir sélectionnée (classe "selected") et le panneau
+     d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
+     Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
+  */
+  var regions = g
+    .append("g")
       .selectAll("path")
       .data(canada.features)
       .enter()
-      .append("path")
+    .append("path")
       .attr("d", path)
       .attr("fill", d => {
 	const id = d.properties.NUMCF;
-	const circons = sources.find( e => e.id === id);
-	const party = circons.results.sort( (a, b) => b.votes - a.votes )[0].party;
+	const all = sources.find( e => e.id === id);
+	const party = all.results.sort( (a, b) => b.votes - a.votes )[0].party;
 	return color(party);
       })
       .attr("fill-opacity", .8)
       .attr("stroke", "#333")
+      .on("click", (d) => {
+	showPanel();
+	regions.classed("selected", false);
+	d3.event.srcElement.classList.add("selected");
+      })
   ;
 }
 
