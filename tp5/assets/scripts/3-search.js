@@ -20,10 +20,34 @@ function search(map, g, districtId, bound, showPanel) {
   /* TODO: Effectuer un zoom en utilisant la fonction "fitBounds" de Leaflet en respectant les contraintes suivantes:
      - Le niveau de zoom maximum doit être de 8;
      - Le pan doit être animé (durée de 1s et "easeLinearity" de 0.5s);
-     - Le zoom doit être animé.
+     - Le zoom doit être animé. OK
 
-     Sélectionner la zone recherchée en lui appliquant la classe "selected". De plus, afficher le panneau d'informations
+     Sélectionner la zone recherchée en lui appliquant la classe "selected". De plus, afficher le panneau d'informations -->OK
      pour cette circonscription en faisant appel à la fonction "showPanel".
   */
 
+  map.fitBounds(bound, {
+    maxzoom:  8,
+    // animate:  true,
+    // duration: 1,
+    // easeLinearity: 0.5
+    pan: {
+      animate: true,
+      duration: 1.5,
+      easeLinearity: 0.5
+    },
+    zoom: {
+      animate: true
+    }
+  });
+
+  let zones = d3.selectAll("g path").nodes();
+  zones.forEach( z => {
+    if (z.__data__.properties.NUMCF == districtId) {
+      z.classList.add("selected");
+    } else {
+      z.classList.remove("selected");
+    }
+  });
+  showPanel(districtId);
 }
