@@ -36,11 +36,12 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
      - La nom du candidat gagnant ainsi que son parti;
      - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
   */
-
+  const totalVotes = districtSource.results.map( x => x.votes ).reduce( (a,b) => a + b );
   const winner = districtSource.results.sort( (a, b) => b.votes - a.votes )[0];
+
   d3.select("#district-name")    .text(districtSource.name);
   d3.select("#elected-candidate").text(winner.candidate);
-  d3.select("#votes-count")      .text(winner.votes);
+  d3.select("#votes-count")      .text(totalVotes + " votes");
 
 }
 
