@@ -19,7 +19,8 @@ function updateDomains(districtSource, x, y) {
      que les partis sont triés en ordre décroissant de votes obtenus (le parti du candidat gagnant doit se retrouver
      en premier).
   */
-
+  y.domain(districtSource.results.map( d => d.party ))
+  x.domain([0, d3.max(districtSource.results.map( d => d.votes))]);
 }
 
 /**
@@ -35,6 +36,11 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
      - La nom du candidat gagnant ainsi que son parti;
      - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
   */
+
+  const winner = districtSource.results.sort( (a, b) => b.votes - a.votes )[0];
+  d3.select("#district-name")    .text(districtSource.name);
+  d3.select("#elected-candidate").text(winner.candidate);
+  d3.select("#votes-count")      .text(winner.votes);
 
 }
 
@@ -63,6 +69,43 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
      vous devez indiquer "Autre" comme forme abrégée.
   */
 
+
+  const sortedData = districtSource.results.sort( (a, b) => d3.descending(a.votes, b.votes) );
+
+  gAxis
+    .call(yAxis)
+    .selectAll("text")
+    .text( (d, i) => {
+      let abr = (parties.find( p => p.name === d));
+      abr = abr !== undefined ? abr.abbreviation : "Autre";
+      return abr;
+    })
+  ;
+
+  // remove existing bars
+  gBars.selectAll("g").remove();
+
+  let bars = gBars
+      .selectAll("g")
+      .data(districtSource.results)
+      .enter()
+    .append("g")
+
+  bars
+    .append("rect")
+      .attr("x", 0)
+      .attr("y", d => {
+	return y(d.party);
+      })
+
+      .attr("height", y.bandwidth())
+      .attr("width", d => x(d.votes))
+
+      .attr("fill", d => color(d.party))
+  ;
+
+
+  // console.log(gBars);
 }
 
 /**
