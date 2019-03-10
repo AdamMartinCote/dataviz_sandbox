@@ -39,9 +39,9 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
   const totalVotes = districtSource.results.map( x => x.votes ).reduce( (a,b) => a + b );
   const winner = districtSource.results.sort( (a, b) => b.votes - a.votes )[0];
 
-  d3.select("#district-name")    .text(districtSource.name + "[" + districtSource.id + "]");
+  d3.select("#district-name")    .text(districtSource.name + " [" + districtSource.id + "]");
   d3.select("#elected-candidate").text(winner.candidate + " (" + winner.party + ")");
-  d3.select("#votes-count")      .text(totalVotes + " votes");
+  d3.select("#votes-count")      .text(formatNumber(totalVotes) + " votes");
 
 }
 
@@ -105,8 +105,13 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
       .attr("fill", d => color(d.party))
   ;
 
-
-  // console.log(gBars);
+  bars.append("text")
+    .attr("y", d => y(d.party) + y.bandwidth()/2)
+    .attr("x", d => x(d.votes) + 6)
+    .attr("dominant-baseline", "central")
+    .text(function (d) {
+      return d.percent;
+    });
 }
 
 /**
@@ -116,5 +121,6 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
  */
 function reset(g) {
   // TODO: Réinitialiser l'affichage de la carte en retirant la classe "selected" de tous les éléments.
-
+  let zones = d3.selectAll("g path").nodes();
+  zones.forEach( z => z.classList.remove("selected"));
 }
