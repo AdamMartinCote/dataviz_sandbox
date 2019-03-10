@@ -80,18 +80,18 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     .append("path")
       .attr("d", path)
       .attr("fill", d => {
-	const id = d.properties.NUMCF;
-	const all = sources.find( e => e.id === id);
-	const party = all.results.sort( (a, b) => b.votes - a.votes )[0].party;
-	return color(party);
+        const id = d.properties.NUMCF;
+        const all = sources.find( e => e.id === id);
+        const party = all.results.sort( (a, b) => b.votes - a.votes )[0].party;
+        return color(party);
       })
       .attr("fill-opacity", .8)
       .attr("stroke", "#333")
       .on("click", (d) => {
-	const id = d.properties.NUMCF;
-	showPanel(id); // TODO : check
-	regions.classed("selected", false);
-	d3.event.srcElement.classList.add("selected");
+        const id = d.properties.NUMCF;
+        showPanel(id); // TODO : check
+        regions.classed("selected", false);
+        d3.event.srcElement.classList.add("selected");
       })
   ;
 }
