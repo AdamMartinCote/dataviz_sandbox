@@ -40,7 +40,7 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
   const winner = districtSource.results.sort( (a, b) => b.votes - a.votes )[0];
 
   d3.select("#district-name")    .text(districtSource.name + "[" + districtSource.id + "]");
-  d3.select("#elected-candidate").text(winner.candidate);
+  d3.select("#elected-candidate").text(winner.candidate + " (" + winner.party + ")");
   d3.select("#votes-count")      .text(totalVotes + " votes");
 
 }
