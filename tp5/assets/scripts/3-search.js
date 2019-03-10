@@ -43,11 +43,13 @@ function search(map, g, districtId, bound, showPanel) {
 
   let zones = d3.selectAll("g path").nodes();
   zones.forEach( z => {
-    if (z.__data__.properties.NUMCF == districtId) {
+    if (d3.select(z).datum() && // protect from null
+	d3.select(z).datum().properties.NUMCF === districtId) {
       z.classList.add("selected");
     } else {
       z.classList.remove("selected");
     }
   });
+
   showPanel(districtId);
 }
